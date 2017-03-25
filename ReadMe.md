@@ -1,5 +1,6 @@
 # ICMD
 개발자의 자기소개도 개발자스럽게 하는것은 어떨까 해서 만든 웹사이트
+- 참고 [링크](http://cid.dothome.co.kr/like_developer/)
 
 ## 사용전에 알아두셔야 할 것
 1. *like_developer/index.php*로 들어가 myname 변수를 본인의 이름으로 수정한다.
