@@ -93,24 +93,24 @@
 
     <!-- 내용 입력 받기 -->
     <script>
-      var cmd = "";   // 지금 입력 하고 있는 명령어
+      var cmd = "";       // 지금 입력 하고 있는 명령어
       var str = new String("");
       var beforeDoc = document.getElementById('texts').innerHTML;
 
       function on_key_down() {
       	var keycode = event.keyCode;
 
-        if ( keycode == 8 ) {     // 백스페이스
+        if ( keycode == 8 ) {                // 백스페이스
           cmd.slice (0, -1);
-        } else if ( keycode == 116            // F5
-      	) event.returnValue = false;   // 브라우저 기능 키 무효화
+        } else if ( keycode == 116           // F5
+      	) event.returnValue = false;         // 브라우저 기능 키 무효화
 
-        if ( keycode == 13 ) {         // 엔터
+        if ( keycode == 13 ) {               // 엔터
           onEnter();
         } else if ( keycode == 190 ) {       // '.'
           cmd = cmd + ".";
           document.getElementById('texts').innerHTML += "<span>" +  "." + "</span>";
-        } else if ( keycode == 191 ) {       // '/
+        } else if ( keycode == 191 ) {       // '/''
           cmd = cmd + "/";
           document.getElementById('texts').innerHTML += "<span>" +  "/" + "</span>";
         } else {
@@ -124,12 +124,23 @@
           if (cmd == "/HELP") {
             document.getElementById('texts').innerHTML += "<br><span> > Here are Instructions that you can use..</span>";
             document.getElementById('texts').innerHTML += "<? foreach ($files as $f) { echo "<br> >> "; echo $f; }?>" + "<br>";
-            readTxtFile("../instruction/About.txt");
           } else {
             var forLen = Number(<? echo count($files); ?>);
-            var cmdIns = new array();
+            var cmdIns = <?php echo json_encode($files)?>;
             var bCheck = false;
 
+            for (var i = 0; i < forLen; i++) {
+              if (cmdIns[i] == cmd.substring(1)) {
+                readTxtFile("../instruction/" + cmdIns[i] + ".txt");
+                bCheck = true;
+                break;
+              }
+            }
+
+            // 틀린 명령어를 쳤을 때
+            if (bCheck == false) {
+              document.getElementById('texts').innerHTML += "<br> > Wrong Instructions.." + "<br>";
+            }
           }
         }
         cmd = "";
@@ -144,7 +155,7 @@
             if(rawFile.status === 200 || rawFile.status == 0) {
               var allText = rawFile.responseText;
 
-              document.getElementById('texts').innerHTML += "<span>" + allText + "</span><br>";
+              document.getElementById('texts').innerHTML += "<br><span>" + allText + "</span><br>";
             }
           }
         };
