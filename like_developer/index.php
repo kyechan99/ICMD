@@ -19,10 +19,11 @@
   sort($files);
 ?>
 
-<!DOCTYPE html>
-<html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ko" xml:lang="ko">
   <head>
     <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>ICMD</title>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js" type="text/javascript"></script>
   </head>
@@ -119,14 +120,36 @@
       }
 
       function onEnter() {
-        if (cmd == "/HELP") {
-          document.getElementById('texts').innerHTML += "<br><span> > Here are Instructions that you can use..</span>";
-          document.getElementById('texts').innerHTML += "<? foreach ($files as $f) { echo "<br> >> "; echo $f; }?>" + "<br>";
+        if (cmd.substring(0,1) == "/") {
+          if (cmd == "/HELP") {
+            document.getElementById('texts').innerHTML += "<br><span> > Here are Instructions that you can use..</span>";
+            document.getElementById('texts').innerHTML += "<? foreach ($files as $f) { echo "<br> >> "; echo $f; }?>" + "<br>";
+            readTxtFile("../instruction/About.txt");
+          } else {
+            var forLen = Number(<? echo count($files); ?>);
+            var cmdIns = new array();
+            var bCheck = false;
+
+          }
         }
         cmd = "";
         document.getElementById('texts').innerHTML += "<br><span>C:\\Users\\" + myname + " > </span>";
       }
 
+      function readTxtFile(file) {
+        var rawFile = new XMLHttpRequest();
+        rawFile.open("GET", file, false);
+        rawFile.onreadystatechange = function () {
+          if(rawFile.readyState === 4) {
+            if(rawFile.status === 200 || rawFile.status == 0) {
+              var allText = rawFile.responseText;
+
+              document.getElementById('texts').innerHTML += "<span>" + allText + "</span><br>";
+            }
+          }
+        };
+        rawFile.send(null);
+      }
 
     </script>
     <?php ?>
