@@ -1,6 +1,6 @@
 # ICMD
 개발자의 자기소개도 개발자스럽게 하는것은 어떨까 해서 만든 웹사이트
-- 참고 [링크](http://cid.dothome.co.kr/like_developer/)
+- 참고 사이트 : [링크](http://lemontree.dothome.co.kr/cid/like_developer/)
 
 ## 사용전에 알아두셔야 할 것
 1. *like_developer/index.php*로 들어가 myname 변수를 본인의 이름으로 수정한다.
@@ -25,6 +25,9 @@
     > txt 파일을 UTF-8 로 꼭 지정해 주셔야 합니다.
     > 지정하지 않았을 경우 한글이 깨지게 됩니다.
 
+4. OtherLink.txt. 에 본인 웹주소를 올려주시고 Request
+	> 웹주소를 추가해주시고 Request 요청해주시면 Apply 해드립니다.
+	
 ## 사용 하기
 1. 위 ```사용전에 알아두셔야 할 것```을 준수하며 명령어를 만든다.
 2. 서버에 올린다.

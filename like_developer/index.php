@@ -1,4 +1,14 @@
 <!-- https://github.com/kyechan99/ICMD -->
+<!-- 사용전에 읽어 주시길 바랍니다 -->
+<!-- <script language="JavaScript">의 myname 부분을 본인의 성함으로 바꾸주세요 -->
+<!-- 그외 스크립트는 추가해도 되지만 삭제는 삼가주시길 바랍니다. -->
+<!-- 파일 instruction 에는 txt 파일만 허용되며 대문자로 작성해 주세요 -->
+<!-- txt 파일은 UTF-8 형태로 저장해 주시길 바랍니다. (안그러면 한글이 깨져요..) -->
+<!-- 각종 버그나 오류를 찾으시거나 개선법을 알고계실시 위 github 로 Request 해주시면 갑사합니다. -->
+<!-- OtherLink.txt 에는 등록된 사용자들의 링크가 담겨져 있습니다. 특별한 경우가 아니라면 남겨 주시고 웹서버에도 같이 올려주세요. (관련 명령어가 포함되어있음) -->
+<!-- OtherLink.txt 에 본인 링크를 추가해 주시고 Request 요청해 주시면 Apply 해드립니다. -->
+<!-- 끝까지 읽어주셔 감사드립니다. ( 이메일 : kyechan99@naver.com ) -->
+
 <?php
   $dir = "../instruction";
   $handle  = opendir($dir);
@@ -51,16 +61,16 @@
 
     <!-- 첫 타이틀, 기본으로 보여줄 부분입니다. 수정하지 말아 주세요 -->
     <script language="JavaScript">
+      // 아래의 Ye-Chan-Kang 만 본인의 성함으로 변경해 주시면 됩니다.
       var myname = "Ye-Chan-Kang";
 
-      var text = "<p>Developer Introduce [ Version 0.0.1 ]</p>";
+      var text = "<p>Developer Introduce [ Version 1.0.1 ]</p>";
       text = text + "<p>Look Full Script Source : https://github.com/kyechan99/ICMD</p>";
       text = text + "<p>If U Found Error, Plz pull request for our</p>";
       text = text + "<p>Access IP : 127.0.0.1 ..</p>";
       text = text + "<p>Found User : " + myname + " ... </p>";
       text = text + "<p>Success Connecting..!</p>";
 
-      // 아래의 Ye-Chan-Kang 을 본인의 성함으로 변경해 주시면 됩니다.
       text = text + "<span>C:\\Users\\" + myname + " > </span>";
 
       var cnt = 0;
@@ -80,16 +90,6 @@
       }
       gogogo();
     </script>
-
-    <?php
-      /*
-      // 하위 파일명을 출력한다.
-      foreach ($files as $f) {
-          echo "<span>";
-          echo $f;
-          echo "</span> ";
-      }*/
-    ?>
 
     <!-- 내용 입력 받기 -->
     <script>
@@ -119,11 +119,23 @@
         }
       }
 
+      // 엔터키를 눌렀을 때
       function onEnter() {
+        // 첫 글자가 '/' 일시 명령어를 입력한 것이므로 확인
         if (cmd.substring(0,1) == "/") {
           if (cmd == "/HELP") {
             document.getElementById('texts').innerHTML += "<br><span> > Here are Instructions that you can use..</span>";
+            document.getElementById('texts').innerHTML += "<br><span> >> ANOTHER : Found Another Developer URL </span>";
+            document.getElementById('texts').innerHTML += "<br><span> >> TELEPORT : Teleport To Another Developer URL By Random </span>";
             document.getElementById('texts').innerHTML += "<? foreach ($files as $f) { echo "<br> >> "; echo $f; }?>" + "<br>";
+          } else if (cmd == "/ANOTHER") {
+            document.getElementById('texts').innerHTML += "<br><span> > Found Anoter Developer...</span>";
+            foundAnotherURL("../OtherLink.txt");
+            document.getElementById('texts').innerHTML += "<br>";
+          } else if (cmd == "/TELEPORT") {
+            document.getElementById('texts').innerHTML += "<br><span> > Teleporting...</span>";
+            goAnotherURL("../OtherLink.txt");
+            document.getElementById('texts').innerHTML += "<br>";
           } else {
             var forLen = Number(<? echo count($files); ?>);
             var cmdIns = <?php echo json_encode($files)?>;
@@ -147,6 +159,7 @@
         document.getElementById('texts').innerHTML += "<br><span>C:\\Users\\" + myname + " > </span>";
       }
 
+      // 텍스트 파일 읽고 출력
       function readTxtFile(file) {
         var rawFile = new XMLHttpRequest();
         rawFile.open("GET", file, false);
@@ -162,6 +175,39 @@
         rawFile.send(null);
       }
 
+      // 다른 URL 로 랜덤으로 이동
+      function goAnotherURL(file) {
+        var rawFile = new XMLHttpRequest();
+        rawFile.open("GET", file, false);
+        rawFile.onreadystatechange = function () {
+          if(rawFile.readyState === 4) {
+            if(rawFile.status === 200 || rawFile.status == 0) {
+              var allText = rawFile.responseText;
+              var lines = allText.split("\n");
+              setTimeout("location.href='" + lines[Math.floor(Math.random() * lines.length)] +"'",3000);
+            }
+          }
+        };
+        rawFile.send(null);
+      }
+
+      // 등록된 다른 URL 읽고 출력
+      function foundAnotherURL(file) {
+        var rawFile = new XMLHttpRequest();
+        rawFile.open("GET", file, false);
+        rawFile.onreadystatechange = function () {
+          if(rawFile.readyState === 4) {
+            if(rawFile.status === 200 || rawFile.status == 0) {
+              var allText = rawFile.responseText;
+              var lines = allText.split("\n");
+              for (var i = 0; i < lines.length; i++) {
+                document.getElementById('texts').innerHTML += "<br><span>" + lines[i] + "</span>";
+              }
+            }
+          }
+        };
+        rawFile.send(null);
+      }
     </script>
     <?php ?>
     <script src="../js/"></script>
