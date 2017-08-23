@@ -65,8 +65,8 @@
       var myname = "Ye-Chan-Kang";
 
       var text = "<p>Developer Introduce [ Version 1.0.1 ]</p>";
-      text = text + "<p>Look Full Script Source : https://github.com/kyechan99/ICMD</p>";
-      text = text + "<p>If U Found Error, Plz pull request for our</p>";
+      text = text + "<p>Full Script Source : https://github.com/kyechan99/ICMD</p>";
+      text = text + "<p>If U Found Error, Plz Pull-request or Issue</p>";
       text = text + "<p>Access IP : 127.0.0.1 ..</p>";
       text = text + "<p>Found User : " + myname + " ... </p>";
       text = text + "<p>Success Connecting..!</p>";
